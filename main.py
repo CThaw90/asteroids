@@ -23,14 +23,21 @@ def main():
     AsteroidField()
 
     while True:
-        screen.fill('black')
+        screen.fill('white')
         updatable_group.update(dt)
         for obj in drawable_group:
             obj.draw(screen)
         for obj in asteroid_group:
             if obj.collided_with(player):
                 print('Game Over!')
+                pygame.display.flip()
                 return
+
+            for shot_obj in shot_group:
+                if shot_obj.collided_with(obj):
+                    obj.split()
+                    shot_obj.kill()
+
         for obj in shot_group:
             obj.draw(screen)
 
